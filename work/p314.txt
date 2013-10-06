@@ -1,0 +1,52 @@
+Qualities of the best path:
+* Symmetric about axes?
+* Symmetric about diagonals?
+* If symmetric, given one point, paths on either side are best.
+
+
+#       . ,
+#     . , ,
+#   . , , ,
+# . . . , ,
+# . . . . o
+
+#       . .
+#     . , .
+#   . , , .
+# . . . o .
+# . . . . .
+
+#       . .
+#     . , .
+#   . . o .
+# . . . . .
+# . . . . .
+
+Octagon:
+500 = s + 2 * s / sqrt(2)
+500 * sqrt(2) = s * (sqrt(2) + 2)
+s = 500 * sqrt(2) / (sqrt(2) + 2) = 207
+A = 2 * (1 + sqrt(2)) * s * s
+P = 8 * s
+A / P = 125
+
+Truncated square:
+
+
+Round corners with r radius:
+A = 500 * (500 - 2 * r) + 2 * (500 - 2 * r) * r + pi * r * r
+  = 500 * 500 + (pi - 4) * r * r
+A' = 2 * (pi - 4) * r
+P = 4 * (500 - 2 * r) + 2 * pi * r
+  = 2000 + (2 * pi - 8) * r
+P' = 2 * pi - 8
+(A / P)' = (A' * P - A * P') / (P * P)
+         = (2 * (pi - 4) * r * (2000 + (2 * pi - 8) * r) - (500 * 500 + (pi - 4) * r * r) * (2 * pi - 8)) / ((2000 + (2 * pi - 8) * r) * (2000 + (2 * pi - 8) * r))
+(max A / P = 132.54 at r = 132.54)
+
+Arc corners with angle theta:
+alpha = (2 * pi - 4 * theta) / 8
+r = 250 / cos(alpha)
+A = 4 * 250 * (250 * tan(alpha)) + pi * r * r * (4 * theta / 2 / pi)
+P = 8 * 250 * tan(alpha) + 2 * pi * r * (4 * theta / 2 / pi)
+(max A / P = 131.72 at theta = 0.47)
