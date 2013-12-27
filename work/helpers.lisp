@@ -11,16 +11,17 @@
     (do ((i 2 (1+ i)))
 	((= i n))
       (if (= (svref totients i) 1) ; prime
-	  ;; multiples of prime
-	  (do ((j i (+ j i)))
-	      ((>= j n))
-	    (multf (svref totients j) (1- i)))
-	  ;; multiples of powers of prime
-	  (do ((ix (* i i) (* ix i)))
-	      ((>= ix n))
-	    (do ((j ix (+ j ix)))
-		((>= j n))
-	      (multf (svref totients j) i)))))
+          (progn
+            ;; multiples of prime
+            (do ((j i (+ j i)))
+                ((>= j n))
+              (multf (svref totients j) (1- i)))
+            ;; multiples of powers of prime
+            (do ((ix (* i i) (* ix i)))
+                ((>= ix n))
+              (do ((j ix (+ j ix)))
+                  ((>= j n))
+                (multf (svref totients j) i))))))
     totients))
 
 (defun digit-permutation-p (x y)
