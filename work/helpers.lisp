@@ -7,23 +7,38 @@
 
 (defun totients-below (n)
   "returns an array of totients from 2 to n - 1"
-  (let ((totients (make-array n :initial-element 1)))
+  (let ((totients (make-array n :element-type 'fixnum :initial-element 1)))
     (do ((i 2 (1+ i)))
 	((= i n))
-      (if (= (svref totients i) 1) ; prime
+      (declare (type fixnum i))
+      (if (= (aref totients i) 1) ; prime
           (progn
             ;; multiples of prime
             (do ((j i (+ j i)))
                 ((>= j n))
-              (multf (svref totients j) (1- i)))
+              (declare (type fixnum j))
+              (multf (aref totients j) (1- i)))
             ;; multiples of powers of prime
             (do ((ix (* i i) (* ix i)))
                 ((>= ix n))
+              (declare (type fixnum ix))
               (do ((j ix (+ j ix)))
                   ((>= j n))
-                (multf (svref totients j) i))))))
+                (declare (type fixnum j))
+                (multf (aref totients j) i))))))
     totients))
 
+(defun digit-counts (n)
+  (declare (type fixnum n))
+  (declare (optimize (safety 0) (speed 3)))
+  (let ((ds (make-array 10 :element-type 'fixnum :initial-element 0)))
+    (if (= n 0)
+        (setf (aref ds 0) 1)
+        (do ((r n (floor r 10)))
+            ((= r 0))
+          (declare (type fixnum r))
+          (incf (aref ds (mod r 10)))))
+    ds))
+
 (defun digit-permutation-p (x y)
-  (equal (sort (write-to-string x) #'char<)
-	 (sort (write-to-string y) #'char<)))
+  (equalp (digit-counts x) (digit-counts y)))
