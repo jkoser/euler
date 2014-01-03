@@ -7,6 +7,7 @@
 
 (defun totients-below (n)
   "returns an array of totients from 2 to n - 1"
+  (declare (optimize (speed 3)))
   (let ((totients (make-array n :element-type 'fixnum :initial-element 1)))
     (do ((i 2 (1+ i)))
 	((= i n))
@@ -29,15 +30,16 @@
     totients))
 
 (defun digit-counts (n)
-  (declare (type fixnum n))
-  (declare (optimize (safety 0) (speed 3)))
+  (declare (fixnum n))
+  (declare (optimize (speed 3)))
   (let ((ds (make-array 10 :element-type 'fixnum :initial-element 0)))
     (if (= n 0)
         (setf (aref ds 0) 1)
-        (do ((r n (floor r 10)))
-            ((= r 0))
-          (declare (type fixnum r))
-          (incf (aref ds (mod r 10)))))
+        (do ((q n) (r 0))
+            ((= q 0))
+          (declare (fixnum q r))
+          (multiple-value-setq (q r) (floor q 10))
+          (incf (aref ds r))))
     ds))
 
 (defun digit-permutation-p (x y)
