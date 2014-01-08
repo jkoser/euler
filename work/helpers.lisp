@@ -5,6 +5,36 @@
 (defmacro multf (place multiplier)
   `(setf ,place (* ,place ,multiplier)))
 
+(defmacro dolist-cross ((var1 list1 var2 list2 &optional result) &rest body)
+  `(dolist (,var1 ,list1 ,result)
+     (dolist (,var2 ,list2)
+       ,@body)))
+
+(defun primes-below (n)
+  "returns a bit array indicating truth values from 0 to n - 1"
+  (declare (fixnum n))
+  (let ((prime (make-array n :element-type 'bit :initial-element 1)))
+    (if (> n 0) (setf (sbit prime 0) 0))
+    (if (> n 1) (setf (sbit prime 1) 0))
+    (do ((i 3 (+ i 1)))
+        ((>= i n))
+      (declare (fixnum i))
+      (cond ((evenp i)
+             (setf (sbit prime i) 0))
+            ((not (zerop (sbit prime i)))
+             (do ((i2 (* i 2))
+                  (j (* i 3) (+ j i2)))
+                 ((>= j n))
+               (declare (fixnum i2 j))
+               (setf (sbit prime j) 0)))))
+    prime))
+
+(defun primes-below-list (n)
+  "returns a list of all primes strictly less than n"
+  (iter (for b in-vector (primes-below n) with-index i)
+        (if (zerop b) (next-iteration))
+        (collect i)))
+
 (defun totients-below (n)
   "returns an array of totients from 2 to n - 1"
   (declare (optimize (speed 3)))

@@ -10,3 +10,18 @@
     (reduce (lambda (a b) (if (< (cdr a) (cdr b)) a b))
             permutations :initial-value (cons -1 2))))
 
+(defun solve-p70-prime-pair ()
+  (let ((primes (delete-if (op < _ 1009) (primes-below-list 10000)))
+        (min-ratio 2)
+        (min-n -1))
+    (dolist-cross
+     (p1 primes p2 primes)
+     (let* ((n (* p1 p2))
+            (totient (* (- p1 1) (- p2 1)))
+            (ratio (/ n totient)))
+       (if (and (< n 10000000)
+                (< ratio min-ratio)
+                (digit-permutation-p n totient))
+           (setq min-ratio ratio
+                 min-n n))))
+    (cons min-n min-ratio)))
