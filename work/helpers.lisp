@@ -10,6 +10,16 @@
      (dolist (,var2 ,list2)
        ,@body)))
 
+(defmacro! cachehash (o!key o!hash-table value-form)
+  `(or (gethash ,g!key ,g!hash-table)
+       (setf (gethash ,g!key ,g!hash-table) ,value-form)))
+
+(defun factorial (n)
+  (do ((i 1 (+ i 1))
+       (result 1 (* result i)))
+      ((> i n)
+       result)))
+
 (defun primes-below (n)
   "returns a bit array indicating truth values from 0 to n - 1"
   (declare (fixnum n))
@@ -58,6 +68,20 @@
                 (declare (type fixnum j))
                 (multf (aref totients j) i))))))
     totients))
+
+(defun digits (n)
+  "returns a list of the base-10 digits of a non-negative fixnum"
+  (declare (fixnum n))
+  (declare (optimize (speed 3)))
+  (if (= n 0)
+      '(0)
+      (do ((q n)
+           (r 0)
+           (digits nil (cons r digits)))
+          ((= q 0)
+           digits)
+        (declare (fixnum q r))
+        (multiple-value-setq (q r) (floor q 10)))))
 
 (defun digit-counts (n)
   (declare (fixnum n))
