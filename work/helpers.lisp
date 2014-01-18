@@ -41,9 +41,10 @@
 
 (defun primes-below-list (n)
   "returns a list of all primes strictly less than n"
-  (iter (for b in-vector (primes-below n) with-index i)
-        (if (zerop b) (next-iteration))
-        (collect i)))
+  (loop with primes = (primes-below n)
+       for i from 2 to (- n 1)
+       when (plusp (sbit primes i))
+       collect i))
 
 (defun totients-below (n)
   "returns an array of totients from 2 to n - 1"
