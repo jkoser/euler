@@ -1,0 +1,26 @@
+(defun right-triangles (len)
+  (loop for c from (ceiling len 3) to (floor len 2)
+     nconc
+       (loop with ab = (- len c)
+            for a from 1 to (floor ab 2)
+            when (= (expt c 2) (+ (expt a 2) (expt (- ab a) 2)))
+            collect (list a (- ab a) c))))
+
+(defun distinct-right-triangles (maxlen)
+  (do ((sieve (make-array maxlen :element-type 'fixnum :initial-element 0))
+       (n 12 (+ n 2))
+       (triangles nil)
+       (singles 0))
+      ((>= n maxlen)
+       (values (nreverse triangles) singles))
+    (if (zerop (aref sieve n))
+        (let ((ts (right-triangles n)))
+          (if (consp ts)
+              (progn
+                (push (cons n ts) triangles)
+                (do ((m n (+ m n)))
+                    ((>= m maxlen))
+                  (incf (aref sieve m)))))))
+    (if (= (aref sieve n) 1)
+        (incf singles))))
+
