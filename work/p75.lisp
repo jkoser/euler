@@ -1,9 +1,29 @@
+(defmacro with-type (type expr)
+  `(the ,type ,(if (atom expr)
+                   expr
+                   (expand-call type (binarize expr)))))
+
+(defun expand-call (type expr)
+  `(,(car expr) ,@(mapcar #'(lambda (a)
+                              `(with-type ,type ,a))
+                          (cdr expr))))
+
+(defun binarize (expr)
+  (if (and (nthcdr 3 expr)
+           (member (car expr) '(+ - * /)))
+      (destructuring-bind (op a1 a2 . rest) expr
+        (binarize `(,op (,op ,a1 ,a2) ,@rest)))
+      expr))
+
 (defun right-triangles (len)
-  (loop for c from (ceiling len 3) to (floor len 2)
+  (declare (type fixnum len))
+  (declare (optimize (speed 3) (safety 0)))
+  (loop for c fixnum from (ceiling len 3) to (floor len 2)
      nconc
-       (loop with ab = (- len c)
-            for a from 1 to (floor ab 2)
-            when (= (expt c 2) (+ (expt a 2) (expt (- ab a) 2)))
+       (loop with ab fixnum = (- len c)
+            for a fixnum from 1 to (floor ab 2)
+            when (= (the fixnum (expt c 2))
+                    (with-type fixnum (+ (expt a 2) (expt (- ab a) 2))))
             collect (list a (- ab a) c))))
 
 (defun distinct-right-triangles (maxlen)
