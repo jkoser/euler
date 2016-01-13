@@ -5,7 +5,7 @@ public class P10 {
 	private static final int MAX = 2000000;
 	private static final BitSet bits = new BitSet(MAX);
 
-	public static void main(String[] args) {
+	private static void custom() {
 		int count = 0;
 		BigInteger sum = BigInteger.ZERO;
 		for (int i = 2; i < MAX; i = bits.nextClearBit(i + 1)) {
@@ -17,5 +17,26 @@ public class P10 {
 		}
 		System.out.println("count: " + count);
 		System.out.println("sum: " + sum);
+	}
+
+	private static void sieve() {
+		PrimeSieve sieve = new PrimeSieve(MAX);
+		System.out.println("count: " + sieve.getList().size());
+		System.out.println("sum: " + Utils.sumInts(sieve.getList()));
+	}
+
+	public static void main(String[] args) {
+		Utils.timeThis(new Runnable() {
+			@Override
+			public void run() {
+				custom();
+			}
+		});
+		Utils.timeThis(new Runnable() {
+			@Override
+			public void run() {
+				sieve();
+			}
+		});
 	}
 }

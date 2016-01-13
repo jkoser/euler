@@ -1,8 +1,12 @@
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 
 public class P8 {
-	public static byte[] readDigits() {
-		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+	public static byte[] readDigits() throws FileNotFoundException {
+		String fileName = "/home/justin/src/euler/solved/p8.txt";
+		BufferedReader in = new BufferedReader(new FileReader(fileName));
 		byte[] digits = new byte[1000];
 		int n = 0;
 		String line = null;
@@ -13,17 +17,22 @@ public class P8 {
 				}
 				n += line.length();
 			}
-		} catch (IOException e) { }
+		} catch (IOException e) {
+		}
+		try {
+			in.close();
+		} catch (IOException e) {
+		}
 		return digits;
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws FileNotFoundException {
 		byte[] digits = readDigits();
-		int maxProduct = 0;
-		for (int i = 0; i < 996; i++) {
+		long maxProduct = 0;
+		for (int i = 0; i < 988; i++) {
 			System.out.print(digits[i]);
-			int p = 1;
-			for (int k = 0; k < 5; k++) {
+			long p = 1;
+			for (int k = 0; k < 13; k++) {
 				p *= digits[i + k];
 			}
 			if (p > maxProduct) {

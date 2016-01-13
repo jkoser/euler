@@ -1,4 +1,6 @@
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Random;
 
 public class P11 {
@@ -20,8 +22,8 @@ public class P11 {
 	}
 
 	public static int[][] readMatrix() throws IOException {
-		BufferedReader in =
-			new BufferedReader(new InputStreamReader(System.in));
+		String fileName = "/home/justin/src/euler/solved/p11.txt";
+		BufferedReader in = new BufferedReader(new FileReader(fileName));
 		int[][] m = new int[DIM][];
 		for (int i = 0; i < DIM; i++) {
 			String line = in.readLine();
@@ -31,6 +33,7 @@ public class P11 {
 				m[i][j] = Integer.parseInt(ss[j]);
 			}
 		}
+		in.close();
 		return m;
 	}
 
@@ -52,17 +55,17 @@ public class P11 {
 				// down
 				int p = 1;
 				for (int k = 0; k < RUN; k++)
-					p *= m[i+k][j];
+					p *= m[i + k][j];
 				max = Math.max(max, p);
 				// right
 				p = 1;
 				for (int k = 0; k < RUN; k++)
-					p *= m[i][j+k];
+					p *= m[i][j + k];
 				max = Math.max(max, p);
 				// diagonal
 				p = 1;
 				for (int k = 0; k < RUN; k++)
-					p *= m[i+k][j+k];
+					p *= m[i + k][j + k];
 				max = Math.max(max, p);
 			}
 		}
@@ -71,14 +74,14 @@ public class P11 {
 				// other diagonal
 				int p = 1;
 				for (int k = 0; k < RUN; k++)
-					p *= m[i-k][j+k];
+					p *= m[i - k][j + k];
 				max = Math.max(max, p);
 			}
 		}
 		return max;
 	}
 
-	public static void main(String [] args) throws IOException {
+	public static void main(String[] args) throws IOException {
 		int[][] m = readMatrix();
 		printMatrix(m);
 		System.out.println(greatestRunProduct(m));
