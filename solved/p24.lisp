@@ -12,4 +12,24 @@
                               ps)))
                ((null x) (reverse ps))))))
 
-(format t "~A~%" (nth 999999 (permute '(0 1 2 3 4 5 6 7 8 9))))
+(defun factorial (n)
+  (do ((n n (- n 1))
+       (p 1 (* p n)))
+      ((<= n 0) p)))
+
+(defun nth-permutation (n lst)
+  (labels ((f (n lst rprefix)
+             (if (null lst)
+               (reverse rprefix)
+               (let* ((k (length lst))
+                      (s (factorial (- k 1)))
+                      (i (floor n s))
+                      (r (mod n s)))
+                 (if (>= i k)
+                   nil
+                   (f r
+                      (append (subseq lst 0 i) (subseq lst (+ i 1)))
+                      (cons (nth i lst) rprefix)))))))
+    (f n lst nil)))
+
+(format t "~A~%" (nth-permutation 999999 '(0 1 2 3 4 5 6 7 8 9)))
