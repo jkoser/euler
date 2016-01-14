@@ -28,7 +28,7 @@ for a in string.ascii_lowercase:
         for c in string.ascii_lowercase:
             attempt = xor_with_key(ciphertext, [ord(a), ord(b), ord(c)])
             attempt_str = ords_to_string(attempt)
-            if 'the' in attempt_str and 'and' in attempt_str:
+            if 'the' in attempt_str and 'and' in attempt_str and 'in' in attempt_str:
                 print(repr(attempt_str))
                 print(a + b + c)
                 print(sum(attempt))

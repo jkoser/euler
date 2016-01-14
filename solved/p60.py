@@ -1,5 +1,11 @@
 #!/usr/bin/env python3
 
+import os, sys
+
+work_path = os.path.dirname(__file__) + "/../work"
+if not work_path in sys.path:
+    sys.path.append(work_path)
+
 from euler3 import primes_below, is_prime, cat_digits
 from heapq import heappush, heappop
 
