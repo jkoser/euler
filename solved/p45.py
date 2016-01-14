@@ -33,3 +33,5 @@ for i in range(285, 100000000):
     tn = i * (i + 1) // 2
     if tn in ps and tn in hs:
         print(tn)
+        if tn > 40755:
+            break

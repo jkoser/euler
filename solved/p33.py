@@ -1,7 +1,13 @@
 #!/usr/bin/env python3
 
-import fractions;
-import euler3;
+import fractions
+import os, sys
+
+work_path = os.path.dirname(__file__) + "/../work"
+if not work_path in sys.path:
+    sys.path.append(work_path)
+
+import euler3
 
 def is_curious(n, d):
     dn = set(euler3.digits(n))

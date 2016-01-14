@@ -16,11 +16,14 @@ from euler3 import digits
 
 n = 1
 k = 1
+dp = 1
 while n <= 1000000:
     for d in digits(k):
         if n in (1, 10, 100, 1000, 10000, 100000, 1000000):
             print('d' + str(n), d)
+            dp *= d
         #else:
         #    print(d)
         n += 1
     k += 1
+print(dp)

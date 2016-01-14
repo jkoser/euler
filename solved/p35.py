@@ -1,14 +1,12 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 
-def primes_below(n):
-    sieve = [True for k in range(n)]
-    for i in range(2, n):
-        if sieve[i]:
-            yield i
-            j = i * 2
-            while j < n:
-                sieve[j] = False
-                j += i
+import os, sys
+
+work_path = os.path.dirname(__file__) + "/../work"
+if not work_path in sys.path:
+    sys.path.append(work_path)
+
+from euler3 import primes_below
 
 def rotations(n):
     a = n
@@ -17,9 +15,9 @@ def rotations(n):
     while a >= 10:
         d += 1
         m *= 10
-        a /= 10
+        a //= 10
     for x in range(d - 1):
-        n = (n % 10) * m + (n / 10)
+        n = (n % 10) * m + (n // 10)
         yield n
 
 primes = set(primes_below(1000000))
@@ -27,4 +25,4 @@ circular = 0
 for p in primes:
     if all(r in primes for r in rotations(p)):
         circular += 1
-print circular
+print(circular)
