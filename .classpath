@@ -9,14 +9,14 @@
 			<attribute name="javadoc_location" value="file:/Users/justin/tmp/watchmaker-framework-0.7.1/docs/api/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lib/guava-15.0.jar" sourcepath="lib-src/guava-15.0-sources.jar">
-		<attributes>
-			<attribute name="javadoc_location" value="jar:platform:/resource/euler/lib-src/guava-15.0-javadoc.jar!/"/>
-		</attributes>
-	</classpathentry>
 	<classpathentry kind="lib" path="lib/javatuples-1.2.jar" sourcepath="lib-src/javatuples-1.2-sources.jar">
 		<attributes>
 			<attribute name="javadoc_location" value="jar:platform:/resource/euler/lib-src/javatuples-1.2-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/usr/share/java/guava-18.0.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="file:/usr/share/doc/libguava-java/api"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="output" path="bin"/>
