@@ -1,6 +1,6 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 
-import string;
+import string
 
 sq = [k * k for k in range(10)]
 
@@ -8,7 +8,7 @@ def next_in_chain(n):
     r = 0
     while n > 0:
         r += sq[n % 10]
-        n = n / 10
+        n //= 10
     return r
 
 def repeated(n):
@@ -24,4 +24,4 @@ count = 0
 for k in range(10000000):
     if cache[next_in_chain(k)] == 89:
         count += 1
-print count
+print(count)
