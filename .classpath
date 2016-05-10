@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" path="work"/>
+	<classpathentry excluding="__pycache__/" kind="src" path="work"/>
 	<classpathentry kind="src" path="solved"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="lib/uncommons-maths-1.2.1.jar"/>
